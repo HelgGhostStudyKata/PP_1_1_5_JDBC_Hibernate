@@ -15,10 +15,12 @@ public class UserDaoJDBCImpl implements UserDao {
     private final String COLUMN_LASTNAME = "lastname";
     private final String COLUMN_AGE = "age";
     private final String COLUMN_ID = "id";
+
     public UserDaoJDBCImpl() {
 
     }
 
+    @Override
     public void createUsersTable() {
         Util.execute(String.format("CREATE TABLE IF NOT EXISTS %s (\n" +
                 "  %s int NOT NULL AUTO_INCREMENT,\n" +
@@ -34,10 +36,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 COLUMN_ID));
     }
 
+    @Override
     public void dropUsersTable() {
         Util.execute("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
+    @Override
     public void saveUser(String name, String lastName, byte age) {
         Util.execute(String.format("INSERT INTO %s (%s, %s, %s)\n" +
                 "VALUES ('%s', '%s', %d)",
@@ -45,10 +49,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 name, lastName, age));
     }
 
+    @Override
     public void removeUserById(long id) {
         Util.execute(String.format("DELETE from users where %s = %d", COLUMN_ID, id));
     }
 
+    @Override
     public List<User> getAllUsers() {
         ArrayList<User> res = new ArrayList<>();
         try (Connection connection = Util.getConnection()) {
@@ -62,6 +68,7 @@ public class UserDaoJDBCImpl implements UserDao {
         return res;
     }
 
+    @Override
     public void cleanUsersTable() {
         Util.execute("DELETE from " + TABLE_NAME);
         //dropUsersTable();

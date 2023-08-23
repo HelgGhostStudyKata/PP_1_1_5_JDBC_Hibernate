@@ -9,7 +9,7 @@ public class Util {
     private final static String PASSWORD = "14759530";
 
     public static boolean execute(String query) {
-        try(Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try(Connection con = getConnection()) {
             return con.createStatement().execute(query);
         } catch (SQLException e) {
             e.printStackTrace();
